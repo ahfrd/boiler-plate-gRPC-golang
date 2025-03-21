@@ -1,0 +1,33 @@
+# Build Stage
+FROM golang:1.23.1 as builder
+
+WORKDIR /go/src/github.com/ahfrd/grpc-boiler-plate-go/
+COPY . .
+
+# Install dependencies and build the application
+RUN go mod tidy && go mod vendor
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+
+# Final Stage
+FROM alpine:latest
+
+# Set up time zone
+ENV TZ=Asia/Jakarta
+RUN apk add --no-cache tzdata \
+    && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+    && echo $TZ > /etc/timezone
+
+WORKDIR /app/
+RUN mkdir logs config
+
+# Copy the built binary and configuration file from the build stage
+COPY --from=builder /go/src/github.com/ahfrd/grpc-boiler-plate-go/main .
+COPY --from=builder /go/src/github.com/ahfrd/grpc-boiler-plate-go/config.yaml /app/
+
+# Set permissions
+RUN chmod 755 /app/main \
+    && chmod -R 755 /app/logs /app/config
+
+EXPOSE 9018
+
+CMD ["./main"]

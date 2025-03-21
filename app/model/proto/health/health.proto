@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package model;
+
+option go_package = "./app/model/proto/health";
+
+
+service HealthCheckService {
+    rpc Check(HealthCheckRequest) returns (HealthCheckResponse);
+}
+
+message HealthCheckRequest {}
+
+message HealthCheckResponse {
+  string status = 1;  // "SERVING", "NOT_SERVING", etc.
+}

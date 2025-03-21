@@ -1,0 +1,24 @@
+ports : #port where the service will be served
+  gin : "1338"
+  grpc: :8005
+database_entity :
+  mysqldb:
+    database_url: "%s:%s@tcp(%s:%s)/%s"  #uri to start our database connection
+    database_type: "mysql" #mysql,postgres
+    database_user: "root"
+    database_password: "root"
+    database_host: "127.0.0.1:3036"
+    database_host_without_port: "127.0.0.1"
+    database_port: "3306"
+    database: "loyalty"
+    database_additional:
+      database_parse_time: "true"
+  scylladb:
+    # scylla_cluster: ["10.253.11.194:9042","10.253.11.194:9043","10.253.11.194:9044"]
+    scylla_cluster: ["127.0.0.1:9042"]
+    scylla_user: "cassandra"
+    scylla_pass: "cassandra"
+    scylla_policy: ""
+    scylla_keyspace: "scylla_go"
+schedular:
+  job_exec_time: "@every 1m"
