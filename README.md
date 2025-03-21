@@ -1,18 +1,5 @@
 # Guide
-```
-    Bahasa Pemrograman : Golang
-    Library : github.com/gin-gonic/gin v1.10.0
-	github.com/go-sql-driver/mysql v1.8.1
-	github.com/gocql/gocql v1.7.0
-	github.com/golang-jwt/jwt/v5 v5.2.1
-	github.com/google/uuid v1.6.0
-	github.com/sirupsen/logrus v1.9.3
-	gopkg.in/yaml.v2 v2.4.0
-```
 
-```
-    Arsitekur : Depedency Injection dengan pendekatan DDD
-```
 ## Run in local
 
 ```
